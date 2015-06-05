@@ -1,0 +1,38 @@
+
+jsp自定义标签使用说明：
+
+1.页面引入 <%@ taglib uri="/WEB-INF/tag/myTag.tld" prefix="my" %>
+  或引入<%@ include file="/WEB-INF/jsp/commons/include.inc.jsp" %>（导入共用taglib）
+  
+2.<my:outUserName id=""/>	输出用户名（账号）,id:用户id
+3.<my:outTrueName id=""/>	输出用户姓名,id:用户id **********一般使用此标签显示用户姓名
+4.<my:outDeptName id=""/>	输出部门名称,id:部门id
+5.<my:fileSizeFormat value=""/>		文件大小格式化输出，	value:文件大小，数字，单位字节（b）
+6.<my:scriptEscape value=""/>		将script 转义，防止执行js代码	
+7.<my:coded str=""/> 字符编码转换
+	str：需要转换的字符串
+	oldType：字符串原编码，默认将ISO-8859-1
+	toType：要转换成的编码，默认将UTF-8
+	defaultValue：当字符串为空时，输出此值，默认为空字符串
+8.<my:outOptions type="1"/>		根据字典值类型，以下拉列表方式输出字典值
+	用法：	<select class="combox required"   name="noticeType" >
+				<my:outOptions type="1"/>
+			</select>
+9.<my:outSelectValue id=""/>  输出字典值，id:字典值id
+
+
+10.<my:validationAuthority url="dept/addPage.do">
+		<a class="button" target="ajaxTodo"  href="dept/del.do?id=${dept.id }&navTabId=${param.rel}" title="您确定删除部门<font color='red'>[${requestScope.dept.deptName }]</font>吗？如果此部门有下级部门，或者此部门有用户，将无法删除！"><span>删除</span></a>
+  </my:validationAuthority>
+  说明：validationAuthority标签，判断当前用户是否拥有请求的url权限，如果有，
+  		则输出标签内容，相当于if条件判断。url和里面的链接的请求一样，不需要参数
+  ####此标签废弃，换成	apache shiro 自带标签
+	
+11.<my:outRoleName id=""/>	输出角色名称,id:角色id	
+12.<my:outLoginInfo type=""/> 输出当前用户登录信息 
+	参数 *userId 
+		 * userName 登陆账号
+		 * trueName 姓名
+		 * deptId 	所属部门id
+		 * deptName	所属部门名称
+	

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false" name="baseCache">
+	
+	
+	 <diskStore path="java.io.tmpdir"/>
+	 
+	<defaultCache
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="3600"
+            timeToLiveSeconds="7200"
+            overflowToDisk="false"
+            diskPersistent="false"
+            memoryStoreEvictionPolicy="LRU"
+            diskExpiryThreadIntervalSeconds="120"
+            />
+	
+	<!-- 用户id : 用户信息对象 -->
+	<cache name="userId2Info"  />
+	<!-- 部门id : 名称 -->
+	<cache name="deptId2Name"  />
+	<!-- 角色id : 名称 -->
+	<cache name="roleId2Name"  />
+	
+	<!-- 字典值类型 : 字典值分类列表 -->
+	<cache name="type2ListValues"  />
+
+	<!-- 字典值id : 字典值 -->
+	<cache name="listId2Name"  />
+	
+	<!-- 数据权限  type : json格式查询规则 -->
+	<cache name="dataPermissions"  />
+	
+	
+</ehcache>

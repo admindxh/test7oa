@@ -1,0 +1,104 @@
+
+认证框架 apache shiro
+
+
+shiro提供以下内置过滤器,用于web项目资源请求验证  在 config/security/applicationContext-shiro.xml 中配置
+	anon（匿名）  org.apache.shiro.web.filter.authc.AnonymousFilter
+	authc（身份验证）	      org.apache.shiro.web.filter.authc.FormAuthenticationFilter
+	authcBasic（http基本验证）  	 org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter
+	logout（退出）      	 org.apache.shiro.web.filter.authc.LogoutFilter
+	noSessionCreation（不创建session）	 org.apache.shiro.web.filter.session.NoSessionCreationFilter
+	perms(许可验证)	 org.apache.shiro.web.filter.authz.PermissionsAuthorizationFilter
+	port（端口验证） 	 org.apache.shiro.web.filter.authz.PortFilter
+	rest  (rest方面)	 org.apache.shiro.web.filter.authz.HttpMethodPermissionFilter
+	roles（权限验证）	 org.apache.shiro.web.filter.authz.RolesAuthorizationFilter
+	ssl （ssl方面） 	 org.apache.shiro.web.filter.authz.SslFilter
+	user （用户方面）	 org.apache.shiro.web.filter.authc.UserFilter
+
+详细说明：
+	rest:例子/admins/user/**=rest[user],根据请求的方法，相当于/admins/user/**=perms[user:method] ,其中method为post，get，delete等。
+	
+	port：例子/admins/user/**=port[8081],当请求的url的端口不是8081是跳转到schemal://serverName:8081?queryString,其中schmal是协议http或https等，serverName是你访问的host,8081是url配置里port的端口，queryString
+	是你访问的url里的？后面的参数。
+	
+	perms：例子/admins/user/**=perms[user:add:*],perms参数可以写多个，多个时必须加上引号，并且参数之间用逗号分割，例如/admins/user/**=perms["user:add:*,user:modify:*"]，当有多个参数时必须每个参数都通过才通过，想当于
+	isPermitedAll()方法。
+	
+	roles：例子/admins/user/**=roles[admin],参数可以写多个，多个时必须加上引号，并且参数之间用逗号分割，当有多个参数时，例如/admins/user/**=roles["admin,guest"],每个参数通过才算通过，相当于hasAllRoles()方法。
+	
+	anon:例子/admins/**=anon 没有参数，表示可以匿名使用。
+	
+	authc:例如/admins/user/**=authc表示需要认证才能使用，没有参数
+	
+	authcBasic：例如/admins/user/**=authcBasic没有参数表示httpBasic认证
+	
+	ssl:例子/admins/user/**=ssl没有参数，表示安全的url请求，协议为https
+	
+	user:例如/admins/user/**=user没有参数表示必须存在用户，当登入操作时不做检查
+	 
+	这些过滤器分为两组，一组是认证过滤器，一组是授权过滤器。其中anon，authcBasic，auchc，user是第一组，
+	perms，roles，ssl，rest，port是第二组
+
+
+shiro 提供的注解，提供方法安全验证，通过验证才执行
+	RequiresAuthentication：使用该注解标注的类，实例，方法在访问或调用时，当前Subject必须在当前session中已经过认证。
+	RequiresGuest：使用该注解标注的类，实例，方法在访问或调用时，当前Subject可以是“gust”身份，不需要经过认证或者在原先的session中存在记录。
+	RequiresPermissions：当前Subject需要拥有某些特定的权限时，才能执行被该注解标注的方法。如果当前Subject不具有这样的权限，则方法不会被执行。
+	RequiresRoles：当前Subject必须拥有所有指定的角色时，才能访问被该注解标注的方法。如果当天Subject不同时拥有所有指定角色，则方法不会执行还会抛出AuthorizationException异常。
+	RequiresUser：当前Subject必须是应用的用户，才能访问或调用被该注解标注的类，实例，方法。
+
+shiro提供的jsp标签，提供jsp上验证
+	首先需要在JSP引入shiro标签： <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>  
+
+	guest标签 :
+	<shiro:guest>访客角色</shiro:guest>
+	验证当前用户是否为“访客”，即未认证（包含未记住）的用户 
+
+	认证通过或已记住的用户 :
+	<shiro:user>  
+	   用户角色  
+	</shiro:user> 
+	
+	authenticated标签: 
+	已认证通过的用户。不包含已记住的用户，这是与user标签的区别所在。 
+	<shiro:authenticated>  
+	    已认证通过的用户  
+	</shiro:authenticated> 
+	
+	notAuthenticated标签: 
+	未认证通过用户，与authenticated标签相对应。与guest标签的区别是，该标签包含已记住用户。
+	<shiro:notAuthenticated>  
+	    未认证通过用户  
+	</shiro:notAuthenticated> 
+	
+	principal 标签: 
+	输出当前用户信息，通常为登录帐号信息   
+	<shiro:principal/>
+	
+	hasRole标签: 
+	验证当前用户是否属于该角色 
+	<shiro:hasRole name="角色">是角色</shiro:hasRole>
+	
+	lacksRole标签: 
+	与hasRole标签逻辑相反，当用户不属于该角色时验证通过 
+	<shiro:lacksRole name="administrator">  
+	    Sorry, you are not allowed to administer the system.  
+	</shiro:lacksRole> 
+	
+	hasAnyRole标签: 
+	验证当前用户是否属于以下任意一个角色。
+	<shiro:hasAnyRoles name="developer, project manager, administrator">  
+	    You are either a developer, project manager, or administrator.  
+	</shiro:lacksRole>  
+	
+	hasPermission标签: 
+	验证当前用户是否拥有制定权限 
+	<shiro:hasPermission name="user:create">  
+	    验证当前用户是否拥有制定权限 
+	</shiro:hasPermission> 
+	
+	lacksPermission标签:
+	与hasPermission标签逻辑相反，当前用户没有制定权限时，验证通过 
+	<shiro:hasPermission name="user:create">  
+	    <a href="createUser.jsp">Create a new User</a>  
+	</shiro:hasPermission>

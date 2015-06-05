@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd "
+	 >
+
+
+
+<!-- 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:config/jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${jdbc.driverClassName}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="autoCommitOnClose" value="true"/>
+		<property name="checkoutTimeout" value="${cpool.checkoutTimeout}"/>
+		<property name="initialPoolSize" value="${cpool.minPoolSize}"/>
+		<property name="minPoolSize" value="${cpool.minPoolSize}"/>
+		<property name="maxPoolSize" value="${cpool.maxPoolSize}"/>
+		<property name="maxIdleTime" value="${cpool.maxIdleTime}"/>
+		<property name="acquireIncrement" value="${cpool.acquireIncrement}"/>
+		<property name="maxIdleTimeExcessConnections" value="${cpool.maxIdleTimeExcessConnections}"/>
+	</bean> -->
+
+	
+	
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:config/dbcp.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<!-- Connection Info -->
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+
+		<!-- Connection Pooling Info -->
+		<property name="maxActive" value="${dbcp.maxActive}" />
+		<property name="maxIdle" value="${dbcp.maxIdle}" />
+		<property name="defaultAutoCommit" value="false" />
+		<property name="timeBetweenEvictionRunsMillis" value="3600000"/>
+		<property name="minEvictableIdleTimeMillis" value="3600000"/>
+	</bean>
+
+
+
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<value>
+				hibernate.dialect=org.hibernate.dialect.MySQLInnoDBDialect
+				hibernate.show_sql=true
+				hibernate.format_sql=false
+				<!-- hibernate.jdbc.fetch_size=50 (oracle支持)-->
+				<!-- 启用二级缓存 -->
+				<!-- hibernate.cache.use_second_level_cache=true -->
+				<!-- 启用查询缓存 -->
+				<!-- hibernate.cache.use_query_cache=true -->
+				<!-- 指定cache实现类 -->
+				<!-- hibernate.cache.provider_class=org.hibernate.cache.EhCacheProvider -->
+				<!-- 指定ehcache配置文件 -->
+				<!-- hibernate.cache.provider_configuration_file_resource_path=config/ehcache.xml -->
+			</value>
+		</property>
+		<!-- xml映射 -->
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>classpath:com/oa/manager</value>
+				<value>classpath:com/oa/test</value>
+			</list>			
+		</property>
+		<!-- 注解 实体映射 -->
+		<property name="packagesToScan"> 
+		 	<list> 
+                   <value>com.oa.manager</value> 
+            </list> 
+		</property>
+	
+	</bean>
+	<!-- jdbcTemplate  -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" >
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- Servlet 工具  -->
+	<bean id="servletUtil" class="com.oa.commons.util.ServletUtil" ></bean>
+	
+	<!-- 自定义初始化加载的一些信息 -->
+	<bean id="baseConfig" class="com.oa.commons.config.BaseConfig" init-method="load" >
+		<property name="devName" value="admin"></property>
+		<property name="saName" value="admin"></property>
+	</bean>
+	<!-- 初始化自定义缓存 -->
+	<bean id="myCache" class="com.oa.commons.cache.MyCache" ></bean>
+	
+	
+	
+	<!-- 自动扫描组件，这里要把controler下面的 controller去除，他们是在spring3-servlet.xml中配置的，如果不去除会影响事务管理的。   -->
+	 <context:component-scan base-package="com.oa">
+	      <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" /> 
+	 </context:component-scan>
+	
+	<!-- transaction manager, use DataSourceTransactionManager -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+ 
+	 <!-- spring declarative transaction management -->
+	<aop:config>
+		<aop:pointcut id="serviceMethods" expression="execution(* com.oa.manager..service.impl.*.*(..))"/> 
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods"/> 
+	</aop:config>
+	
+	<aop:config>
+		<aop:pointcut id="serviceMethods4" expression="execution(* com.oa.android..service.impl.*.*(..))"/> 
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods4"/> 
+	</aop:config>
+	
+	<aop:config>
+		<aop:pointcut id="serviceMethods2" expression="execution(* com.oa.commons.base.BaseServiceImpl.*(..))"/> 
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods2"/> 
+	</aop:config>
+	
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		 <tx:attributes>
+			 <tx:method name="add*"  propagation="REQUIRED" rollback-for="Exception"/>  
+      		 <tx:method name="save*" propagation="REQUIRED" rollback-for="Exception"/>
+       		 <tx:method name="del*" propagation="REQUIRED" rollback-for="Exception"/>  
+        	 <tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>  
+        	 <tx:method name="*"  read-only="true"/>  
+		</tx:attributes>
+	</tx:advice>
+	
+	
+	
+	<!-- 验证码 -->
+	 <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+	        <property name="config">
+	                <bean class="com.google.code.kaptcha.util.Config">
+					        <!--通过构造函数注入属性值 -->
+	                        <constructor-arg type="java.util.Properties">
+	                                <props>
+	                                    <!-- 验证码宽度 -->
+                                        <!-- <prop key="kaptcha.image.width">100</prop>  -->
+                                        <!-- 验证码高度 -->
+                                       <!--  <prop key="kaptcha.image.height">35</prop> -->
+                                        <!-- 生成验证码内容范围 -->
+                                        <!-- <prop key="kaptcha.textproducer.char.string">0123456789</prop> -->
+                                        <!-- 验证码个数 -->
+                                        <prop key="kaptcha.textproducer.char.length">4</prop>
+                                        <!-- 是否有边框 -->
+                                        <!-- <prop key="kaptcha.border">yes</prop> -->
+                                        <!-- 边框颜色 -->
+                                        <!-- <prop key="kaptcha.border.color">105,179,90</prop> -->
+                                        <!-- 边框厚度 -->
+                                       <!--  <prop key="kaptcha.border.thickness">1</prop> -->
+                                        <!-- 验证码字体颜色 -->
+                                       <!--  <prop key="kaptcha.textproducer.font.color">black</prop> -->
+                                        <!-- 验证码字体大小 -->
+                                        <prop key="kaptcha.textproducer.font.size">44</prop>
+                                        <!-- 验证码所属字体样式 -->
+                                       <!--  <prop key="kaptcha.textproducer.font.names">BKamrnBd</prop> -->
+                                         <!-- 干扰线颜色 -->
+                                       <!--  <prop key="kaptcha.noise.color">blue</prop> -->
+                                        <!-- 验证码文本字符间距 -->
+                                       <!--  <prop key="kaptcha.textproducer.char.space">3</prop> -->
+                                    
+                                    </props>
+	                        </constructor-arg>
+	                </bean>
+	        </property>
+	 </bean>
+	
+	
+<!-- 定时任务 开始 -->
+	<!-- ======================== 数据库备份 配置方法 ======================== -->  
+	<!-- 执行的类 -->
+	<bean id="backupDatabaseJob" class="com.oa.commons.job.TimingBackupDatabase"/> 
+	<!-- 配置定时器 -->
+	<bean id="backupJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<!-- 定时执行的类 -->
+			<ref bean="backupDatabaseJob" />
+		</property>
+		<property name="targetMethod">
+			<!-- 定时执行的类方法 -->
+			<value>backupDatabase</value>
+		</property>
+	</bean>
+	
+	<!-- 配置 执行时间 -->  
+		
+	<bean id="cronTriggerBean1" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+  		 <property name="jobDetail" ref="backupJobDetail"></property>  
+   		<!--  <property name="cronExpression" value="0 0 2 * * ?"></property> -->
+   		 
+   		 <property name="cronExpression" value="0 0 2 * * ?"></property>
+   		 
+	</bean> 
+	
+	<!-- 触发器工厂，将所有的定时任务都注入工厂 激活定时任务-->
+	<bean id="SpringJobSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
+ 		 <property name="triggers">  
+     		<list>
+     			 <ref bean="cronTriggerBean1"/> 
+     			 
+      		</list>  
+ 		 </property>  
+	</bean>  
+	
+<!-- 定时任务 结束 -->
+	
+	
+	
+	
+	<!-- activiti 配置-->
+	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration" >
+		 <property name="dataSource" ref="dataSource" />
+   		 <property name="transactionManager" ref="transactionManager" />
+   		 <!-- 构建流程引擎时，如果数据库不存在，则创建 -->
+   		 <property name="databaseSchemaUpdate" value="false" />
+   		 <!-- 定时器线程组件 -->
+    	 <property name="jobExecutorActivate" value="false" /> 
+    	 <!-- 历史存档等级配置， 
+    	 	none：不存储历史归档，
+    	 	activity：归档所有流程实例和活动实例。不归档细节，
+    	 	audit：默认级别,归档所有流程实例，活动实例和提交的表单属性。以至于通过表单的所有用户交互都是可跟踪并可以被审计。
+    	 	full:保存audit级别的所有信息加上像流程变量的所有其它可能的细节。
+    	  -->
+    	 <property name="history" value="full" />
+    	 <!-- 设置流程图字体，解决乱码问题 -->
+    	 <property name="activityFontName" value="宋体" />
+    	 <property name="labelFontName" value="宋体" />
+    	 
+    	 <!-- 暴露给流程在表达式可以直接使用的spring beans -->
+    	 <property name="beans">
+    	 	<map>
+    	 		<entry key="flowUtil" >
+    	 			<bean class="com.oa.manager.workFlow.util.FlowRunUtil"></bean>
+    	 		</entry>
+    	 	</map>
+    	 </property>
+	</bean>
+	
+	<!-- 流程引擎 -->
+	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+   		 <property name="processEngineConfiguration" ref="processEngineConfiguration" />
+    </bean>
+  	<!-- 流程定义服务 -->
+    <bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService" />
+    <!-- 流程实例运行时服务 -->
+    <bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService" />
+    <!-- 任务服务 -->
+    <bean id="taskService" factory-bean="processEngine" factory-method="getTaskService" />
+    <!-- 历史服务 -->
+    <bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" />
+    <!-- 流程管理控制 -->
+    <bean id="managementService" factory-bean="processEngine" factory-method="getManagementService" />
+	<!-- 用户，用户组，身份服务 -->
+	<bean id="identityService" factory-bean="processEngine"   factory-method="getIdentityService" />
+	<!-- 表单服务 -->
+	<bean id="formService" factory-bean="processEngine"   factory-method="getFormService" /> 
+	
+
+	
+</beans>

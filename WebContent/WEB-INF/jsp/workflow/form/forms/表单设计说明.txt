@@ -1,0 +1,40 @@
+
+
+/**
+ * 流程表单控件插件
+ * 说明：流程表单控件特殊处理，对input(text,radio,checkbox)，textarea,select做处理
+ * div 拓展属性
+ * 		flowForm: 属于流程表单，需特殊处理,有两个值，flow：流程全局表单,task:任务表单
+ * 		
+ * 		formType=editor:	编辑模式，将用户不可操作的区域设置不可用
+ * 		formType=show:	显示模式，去除所有的编辑框，用于显示	
+ * 		taskId:当前办理任务的流程定义id，用于判断哪些输入框可用(输入框的taskId和div的taskId相同才可用)。
+ * 				只对全局表单有效，任务表单不需要限制输入权限
+ * 
+ * input，text select  都有的拓展的属性：
+ * 		taskId：此控件属于的任务定义id,如果有多个任务都可以操作此控件，多个id用，隔开，
+ * 		required：是否必填，true，false,默认为false
+ * 		processVariable:是否需要将此控件的值保存在流程变量，true，false,默认false，如果为true，将以此控件的name作为流程变量的key		
+ * 				
+ * 
+ * input 拓展属性：
+ * 
+ * 		loginUserInfo:获取当前登陆用户信息，name:姓名，deptName：部门名称	
+ * 		infoId:	loginUserInfo内容对应的id，如果此控件显示当前登录人
+ * 
+ * 		nowDate：获取当前时间，值为日期格式化方式：yyyy-MM-dd HH:mm:ss
+ * 		
+ * 		
+ * 
+ * textarea 拓展属性:
+ * 		
+ * 
+ * select 拓展属性:
+ * 		
+ * 	
+ * 
+ * 
+ * 
+ * 
+ * 
+ */

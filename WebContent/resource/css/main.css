@@ -1,0 +1,160 @@
+
+
+html,body {
+	font-size:100% ; 
+	width:100%; 
+	height:100%;
+	line-height:normal;   
+	word-wrap:break-word;
+	word-break:break-all; 
+	font-family: arial,宋体,sans-serif;
+}
+
+a {
+	text-decoration: none;
+}
+.div_titlebold{
+	margin-top:10px;
+	margin-bottom:10px;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+}
+.div_sendUser{
+	float:right;
+	margin-right: 20px;
+	color: #666666
+}
+
+/* zTree拓展样式 */
+
+/*展开 合并 箭头作为图标*/
+.ztree li span.button.mypoint_ico_open{
+	margin-right:2px; 
+	background: url(../js/zTree/zTreeStyle/img/diy/blue_expanded.png) no-repeat scroll 0 0 transparent; 
+	vertical-align:top; 
+	*vertical-align:middle
+}
+.ztree li span.button.mypoint_ico_close{
+	margin-right:2px; 
+	background: url(../js/zTree/zTreeStyle/img/diy/blue_right.png) no-repeat scroll 0 0 transparent; 
+	vertical-align:top; 
+	*vertical-align:middle
+}
+/*展开 合并 作为图标*/
+.ztree li span.button.folder_ico_open{
+	margin-right:2px;  
+	background:url(../js/zTree/zTreeStyle/img/zTreeStandard.png) no-repeat scroll -110px -16px transparent; 
+	*background:url(../js/zTree/zTreeStyle/img/zTreeStandard.gif) no-repeat scroll -110px -16px transparent; 
+	*vertical-align:middle;
+	background-position:;
+}
+.ztree li span.button.folder_ico_close{
+	margin-right:2px; 
+	background:url(../js/zTree/zTreeStyle/img/zTreeStandard.png) no-repeat scroll -110px 0 transparent; 
+	*background:url(../js/zTree/zTreeStyle/img/zTreeStandard.gif) no-repeat scroll -110px 0 transparent; 
+	vertical-align:top; 
+	*vertical-align:middle;
+}
+.ztree li span.button.folder_ico_docu{
+	margin-right:2px; 
+	background:url(../js/zTree/zTreeStyle/img/zTreeStandard.png) no-repeat scroll -110px -16px transparent; 
+	*background:url(../js/zTree/zTreeStyle/img/zTreeStandard.gif) no-repeat scroll -110px -16px transparent; 
+	vertical-align:top; 
+	*vertical-align:middle;
+}
+
+
+div.editor{
+	border: none;
+}
+
+/* 流程表单样式   */
+table.flowtable{
+	width: 600px;
+	border-collapse:collapse;
+	margin: 10px auto 10px;
+	border: 1px solid black;
+	height: auto;
+}
+table.flowtable caption{
+	font-size: 20px;
+	font-weight: bold;
+	padding: 10px;
+}
+table.flowtable th{
+	border: 1px solid black;
+	padding: 10px;
+	font-weight: bold;
+	text-align:center;
+}
+table.flowtable td{
+	border: 1px solid black;
+	padding: 10px;
+}
+
+table.flowtable textarea{
+	width: 90%;
+	height: 30px;
+}
+table.flowtable input{
+	width: 90%;
+}
+
+
+.btnDel{
+	background:url(../images/small/Delete_16x16.png) no-repeat; 
+	display:block; 
+	width:22px;
+	height:20px; 
+	margin-top: 1px;
+	margin-left: 2px;
+	
+}
+.btnDelete{
+	background:url(../images/small/Delete_16x16.png) no-repeat; 
+	display:inline-block;
+	width:22px;
+	height:20px; 
+	margin-top: 1px;
+	margin-left: 2px;
+	
+}
+
+.ul-menu{
+	margin: 1px 0 0;
+	padding:0;
+	list-style: none outside none;
+}
+
+li .ul-submenu{
+	display:none;
+	margin: 0 0 0 20px;
+	padding:0;
+	list-style: none outside none;
+	
+}
+
+.ul-menu>li>a , .ul-submenu>li>a{
+    border: 1px solid #95B8E7;
+    display: block;
+    margin: 0 0 -1px;
+    padding: 5px 10px;
+    background-color:#f9f9f9;
+    color: black;
+    text-decoration: none;
+	cursor: pointer;
+	
+}
+
+i.f-right{
+	float: right;
+    margin-right: -6px;
+    margin-top: 2px;
+    opacity: 0.25;
+}
+
+
+
+
+

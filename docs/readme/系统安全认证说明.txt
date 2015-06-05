@@ -1,0 +1,33 @@
+
+采用 RBAC(用户角色权限)基于角色的访问控制，简化了权限的管理。
+
+  角色分配菜单权限和操作权限，菜单权限只作为可以显示那些菜单，操作权限是真正的权限校验。
+  使用 apache shiro 安全框架 对 访问权限进行控制
+使用：
+   1. sy_menu 菜单表添加操作菜单
+   2. sy_action 表添加的操作权限
+   	  格式：资源(action 的 RequestMapping，防止重复):操作 
+   	  	  url:user/add.do
+   	  	  查询权限:  user:read
+   	  	  添加权限:  user:add
+   	  	  修改权限:  user:update
+   	  	  删除权限:  user:delete
+   	  	  
+   3.action 添加权限注解 
+    	例：
+   		    将 @RequiresPermissions("user:add") 添加到用户添加的action方法，
+   		    则用户只有添加权限才能进行添加操作
+   		    
+   4.页面按钮添加权限，有操作权限才显示，使用jsp标签实现
+   		例:
+   			<shiro:hasPermission name="user:add">  
+			     <button>添加用户</button>
+			</shiro:hasPermission> 
+   	  	 只有 user:add 权限才会现在 添加用户按钮
+   		
+注：  
+	更多使用方法参考  apache shiro 	
+
+
+
+

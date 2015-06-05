@@ -1,0 +1,90 @@
+说明：
+	前端通过封装好的js字段把form内查询条件转换为规定好的查询规则，json格式,
+	后台 代码直接调用封装好的方法，解析json格式查询规则，然后拼接查询语句，
+	可减少java代码的大量if判断，同时为高级查询提供更多的拓展
+	
+一：普通条件分页查询
+	页面：
+		   form： 添加 onsubmit方法，datagridSearch()会自动刷新datagrid
+		   		  添加 formatFilterData=true 属性，在查询的时候会把form内的搜索条件转换为需要的查询规则数据
+		          <form  onsubmit="return datagridSearch(this,'${param.rel }_datagrid');" formatFilterData="true" >
+		  
+		  条件控件：
+		  			<input	type="text" name="title" fieldType="date"  op="like" />
+		  			name :查询字段名称
+		  			fieldType: 字段类型,默认 string
+		  			op: 条件运算符, 默认:equal(相等)
+		  	
+		  		 fieldType和op的值参考查询规则过滤器插件
+		  		 
+	java:  不需要对查询对象的条件进行判断
+			//param 分页条件查询 参数封装
+			public DataGrid selectAfficheDept(PageParam param){
+				DataGrid data=new DataGrid();
+				StringBuffer hql=new StringBuffer("from TableName a where 1=1 ");
+				Map map=new HashMap();//条件对应的参数
+				//拼接查询条件： param.getSearchRules()//查询条件   "10001":系统查询规则类型编码，如果没有,则传入null
+				SearchFilterUtil.appendRules(hql, map, param.getSearchRules(),"10001");
+				//查询总数
+				data.setTotal((Long)dao.findUniqueOne("select count(*)"+hql,map));
+				//拼接排序
+				if(StringUtils.isNotBlank(param.getSort())){
+					param.appendOrderBy(sb);
+				}else{
+					//默认排序 根据情况来使用
+					sb.append(" order by name desc");
+				}
+				//查询数据
+				List rows=dao.findPage(hql.toString(),param.getPage(),param.getRows(),map);
+				data.setRows(rows);
+				return data;
+			}
+二:高级查询:
+	页面：
+		使用封装的queryFilter: 查询过滤器
+		html:<div id="filter" style="width: 95%;margin: 0 auto;"></div>
+				<form  onsubmit="return datagridSearch(this,'datagrid');"  queryFilterId="filter" >
+					<div style="width: 60px;margin: 0 auto;">
+						<button class="btn btn-primary btn-small" type="submit">查询</button>
+					</div>
+				</form>
+		js:	
+			$('#filter').queryFilter({
+		    	fields:[
+		    		{	
+		    			field:"title",//字段
+		    			name:"标题",//显示的名称
+		    			type:"string",//字段类型
+		    			html: '<input type="text" name="title"/>' //对应的输入控件html,
+		    					注意：name为字段名称，要与field 一直，否则无法获取到值
+		    		}
+		    	]
+		    	
+		    });
+	    /*****************************************/
+	    字典值类型列表使用： 
+	    		<select name="type" selectOptions="listValue" optionsType="10"></select>    
+		   		selectOptions="listValue" :说明是字典值列表
+		   		optionsType="10"		字典值列表类型
+		    
+三. 附录
+	字段类型参考：
+		string  byte int	short	long	float	double	boolean	date  timestamp
+		
+	运算符参考:
+			"equal": "相等",		 				 	sql: =
+	        "notequal": "不相等"	  					sql: !=
+	        "startwith": "以..开始", 				sql: like %like
+	        "endwith": "以..结束",					sql: like value%
+	        "like": "相似",							sql: like %value%
+	        "greater": "大于",						sql: >
+	        "greaterorequal": "大于或等于",			sql: >=
+	        "less": "小于",							sql: <
+	        "lessorequal": "小于或等于",				sql: <=
+	        "in": "包括在...",						sql: in
+	        "notin": "不包括..."      				sql: not in 
+		
+		    
+					  	
+		  
+		  

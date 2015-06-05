@@ -1,0 +1,38 @@
+
+查找带回代码：
+	<a href="dept/lookUpPage.do?type=1" lookupGroup="dept" title="部门查询">
+		<input type="text"  readonly="readonly" size="25" toName="dept.name" />
+	</a>
+	<a class="btnLook" href="dept/lookUpPage?type=1" lookupGroup="dept" >查找带回</a>
+	
+	<input type="hidden" name="id"  toName="dept.id"  />
+
+说明：
+	默认将带回的内容在输入框所属的第一个菜单内做搜索，可设置 targetBox 属性进行修改,
+	例：	targetBox=".class", 会从输入框向上查找，第一个符合条件的作为带回父容器
+	
+1.部门查找带回
+	url：dept/lookUpPage
+	参数:type,	1：单选，2：多选，3：单选（树状）
+	
+	页面接收：id:部门id，name：部门名称
+
+2.用户查找带回
+	url：user/lookUpPage
+	参数:type,	1：单选，2：多选
+	
+	页面接收：id:用户id，name：用户名称，zh：用户登录账号
+3.角色查找带回
+	url：role/lookUpPage
+	参数:type,	1：单选，2：多选
+	
+	页面接收：id:角色id，name：角色名称
+	
+4.地区查找带回
+	url:district/lookUpPage
+	
+	页面接收：name:选择的地区名称，（包括上级地区名称）
+	
+	
+	
+	

@@ -1,0 +1,177 @@
+/*  */
+*{
+	margin:0;
+	padding:0;
+}
+html,body {
+	scrollbar-face-color: #f0f2f5;
+	scrollbar-highlight-color: #FFFFFF;
+	scrollbar-shadow-color: #7a8a99;
+	scrollbar-3dlight-color: #98a5b3;
+	scrollbar-arrow-color: #246bb3;
+	scrollbar-track-color: #EEEEEE;
+	scrollbar-darkshadow-color: #dddddd;
+	
+}
+
+html {
+	height: 100%;
+	border: 0 none;
+}
+
+body {
+	background-color: #FFFFFF;
+	color: #444444;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	border: 0 none;
+	font-size: 14px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+a {
+	color: #08d;
+	text-decoration: none;
+	border: 0;
+	background-color: transparent;
+}
+
+a:hover {
+	color: #f80;
+	text-decoration: none;
+}
+
+a:active,a:focus {
+	color: #f60;
+	text-decoration: none;
+}
+
+a.selected {
+	background: #2266BB;
+	color: #DDFFFF;
+	text-decoration: none;
+}
+
+
+.loginPageBody{ background:url(images/loginbodybg.gif) repeat-x left center #d6dedf;}
+.LoginWrapbg{ background:url(images/loginimgbg.jpg) no-repeat center center; height:100%;}
+.loginLogo {
+    background: url("images/logo.png") repeat scroll 0 0 transparent;
+    height: 45px;
+    margin: 0 auto;
+    width: 298px;
+}
+.welcome {
+    color: #2477B3;
+    font-family: "宋体",Tahoma,sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 10px 0 6px 20px;
+    text-align: center;
+}
+.loginBar {
+    font-size: 14px;
+    padding-left: 50px;
+    padding-top: 60px;
+    width: 345px;
+}
+
+.lable {
+    color: #333333;
+    float: left;
+    font-size: 14px;
+    padding-top: 3px;
+    text-align: right;
+    width: 90px;
+}
+
+
+
+
+.inputWrap {
+    background: url("images/loginInputWrapbg.gif") no-repeat scroll left top transparent;
+    border: medium none;
+    float: left;
+    height: 28px;
+    line-height: 16px;
+    width: 200px;
+    
+}
+img {
+    vertical-align: middle;
+}
+input.inputText {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    margin-top: 3px;
+}
+.inputWrap .inputText {
+    font-size: 14px;
+    height: 20px;
+    margin-top: 0;
+    padding-left: 6px;
+    padding-top: 4px;
+    width: 192px;
+}
+input.inputTextHover {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+}
+input.inputTextFocus {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+}
+input[type="text"]:hover, input[type="password"]:hover {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+}
+input[type="text"]:focus, input[type="password"]:focus {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+}
+
+
+.verifyCodeWrap {
+    
+}
+.verifyCode {
+    float: left;
+    margin-left: 5px;
+}
+.verifyCodeWrap .inputWrap {
+	
+}
+.fieldWrap {
+    height: 30px;
+    overflow: hidden;
+    padding-top: 35px;
+    text-align: left;
+    width: 300px;
+}
+#loginBtnWrap {
+    padding: 12px 0 10px 130px;
+    width: 100px;
+}
+#loginBtn {
+    background: url("images/loginbtn.gif") no-repeat scroll 0 0 transparent;
+    color: #FFFFFF;
+    font-size: 14px;
+    height: 34px;
+    letter-spacing: 6px;
+    line-height: 32px;
+    text-align: center;
+    width: 100px;
+    word-spacing: 1px;
+}
+.inline-block {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: middle;
+    font-weight: bold;
+    
+}
+.copyright {
+    padding-top: 10px;
+    text-align: center;
+}

@@ -1,0 +1,68 @@
+
+数据库名称列表参照：
+
+系统管理：
+		sy_users：用户表
+		sy_user_role:用户--角色关联
+		sy_dept:部门表
+		sy_role:角色表
+		sy_role_menu：角色--菜单关联
+		sy_role_action：角色--操作管理
+		sy_menu：菜单表
+		sy_action：操作表
+		list_values：数据字典
+		sy_log：系统操作日志
+		sy_login_log：系统登陆日志
+		sy_table_custom:导入导出,表的自定义设置
+		sy_district:地区表
+文档管理：
+		wd_share_files：共享文档
+		wd_personal_files：公司文档
+		wd_company_files：部门文档
+
+协同办公：
+		xt_notice：通知表
+		xt_notice_content：通知内容
+		xt_notice_files：通知附件
+		xt_notice_receive：通知--接收人或部门关系表
+		xt_journal：工作日志
+		xt_journal_user:日志--共享人关联表
+		
+公共平台：
+		xt_affiche：系统公告
+		xt_affiche_dept：部门公告
+		newsmanagement：新闻
+		newscomment：新闻评论
+		mt_meeting：会议表
+		mt_mapping：会议--参加会议人员关联
+		mt_room：会议室
+		rg_rulesregulations：规章制度
+		rm_rulesmanager:法规
+		
+		
+		
+个人办公：
+		per_msg：消息提醒
+		per_instant_message：即时沟通
+		per_schedule：日程安排
+		ab_personal_address_book：个人通讯录
+		ab_public_address_book：公共通讯录
+		ab_group_address_book：通讯录分组
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+				
+				
