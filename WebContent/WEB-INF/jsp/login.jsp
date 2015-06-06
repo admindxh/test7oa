@@ -77,7 +77,7 @@
 			</div>
 		</div>
 		<div class="copyright">
-			<div class="center">Copyright &copy; 2013-2014  <a href="<fmt:message key="app.name.url" bundle="${commonBundle}"/>" target="_blank" ><fmt:message key="app.name" bundle="${commonBundle}"/></a></div>
+			<div class="center">Copyright &copy; 2015-2016  <a href="<fmt:message key="app.name.url" bundle="${commonBundle}"/>" target="_blank" ><fmt:message key="app.name" bundle="${commonBundle}"/></a></div>
 		</div>
 	</div>
 	

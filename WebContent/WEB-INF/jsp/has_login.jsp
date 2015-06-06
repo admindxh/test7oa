@@ -28,7 +28,6 @@
 			<img src="resource/images/login/images/logo.png" style="margin-left: 50px;"/>
 			<div class="welcome">&nbsp; </div>
 			<div class="loginBar">
-				
 				<div >
 					<div style="margin-left: 20px;margin-top: 50px;">
 						<h3 >当前登陆用户：<my:outLoginInfo type="trueName" /></h3>
@@ -41,7 +40,7 @@
 			</div>
 		</div>
 		<div class="copyright">
-			<div class="center">Copyright &copy; 2013-2014  <a href="<fmt:message key="app.name.url" bundle="${commonBundle}"/>" target="_blank"><fmt:message key="app.name" bundle="${commonBundle}"/></a></div>
+			<div class="center">Copyright &copy; 2015-2016  <a href="<fmt:message key="app.name.url" bundle="${commonBundle}"/>" target="_blank"><fmt:message key="app.name" bundle="${commonBundle}"/></a></div>
 		</div>
 	</div>
 </body>

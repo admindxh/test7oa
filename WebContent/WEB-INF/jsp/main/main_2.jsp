@@ -170,7 +170,7 @@
 		
 			<div id="div_footer" >
 	
-				 Copyright &copy; 2014  
+				 Copyright &copy; 2015  
 				
 			</div>
 		</div>
