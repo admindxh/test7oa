@@ -5,6 +5,9 @@
  */
 package com.oa.manager.system.action;
 
+import java.util.Enumeration;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -38,8 +41,7 @@ public class DataPermissionsAction extends BaseAction{
 	 */
 	@RequiresPermissions("dataPer:read")
 	@RequestMapping("load")
-	public String load(){
-		
+	public String load(HttpServletRequest request){
 		return "system/data_permissions/load";
 	}
 	/**

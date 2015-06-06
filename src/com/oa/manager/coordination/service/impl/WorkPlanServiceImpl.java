@@ -450,9 +450,12 @@ public class WorkPlanServiceImpl extends BaseServiceImpl implements WorkPlanServ
 			if(wp!=null){
 				c.add(wp);
 				List<FileModel> files=JSON.parseArray(wp.getFiles(),FileModel.class);
-				for(FileModel f:files){
-					new File(savePath+"/"+f.getUuid()).delete();//删除附件
+				if (files!=null) {
+					for(FileModel f:files){
+						new File(savePath+"/"+f.getUuid()).delete();//删除附件
+					}
 				}
+				
 			}
 		}
 		

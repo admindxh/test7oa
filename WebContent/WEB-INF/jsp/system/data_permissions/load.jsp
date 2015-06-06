@@ -6,7 +6,6 @@
 <div class="easyui-layout" fit="true">
    <!-- 左侧-->
 	<div region="west" title="功能模块" split="true"	style="width:250px;" >
-	
 	   	<ul id="${param.rel }_leftTree" class="ztree"></ul>
 		
 	</div>
