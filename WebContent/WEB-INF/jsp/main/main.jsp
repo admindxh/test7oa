@@ -12,6 +12,19 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><fmt:message key="app.name" bundle="${commonBundle}"/></title>
 	<link href="favicon.ico" rel="SHORTCUT ICON" />
+	<style type="text/css">
+		.welcome{
+			  color: #2477B3;
+			  font-family: "宋体",Tahoma,sans-serif;
+			  font-size: 14px;
+			  font-weight: bold;
+			  letter-spacing: 1px;
+			  padding: 10px 0 6px 20px;
+			  text-align: center;
+		
+		}
+	
+	</style>
 	<script type="text/javascript">
 	<!--
 		appWebRoot='<%=basePath%>';//网站地址
@@ -21,14 +34,16 @@
 	<%@ include file="/WEB-INF/jsp/commons/include.head.jsp"%>
 
 
+
 </head>
 <body >
 	<div id="sy_layout" class="easyui-layout" fit="true">
 	
 		<!-- 顶部-->
 		<div  region="north" border="false"  style="height: 38px; padding: 1px; overflow: hidden;" >
-			<div style="float: left;">
-				<img src="resource/images/logo/logo.png"   style="margin-left: 7px;"/>
+			<div style="float: left;padding-left: 20px;" class="welcome">
+				<!-- <img src="resource/images/logo/logo.png"   style="margin-left: 7px;"/> -->
+			北京航天三发高科技有限公司工作平台
 			
 			</div>
 			

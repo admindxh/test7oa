@@ -33,8 +33,8 @@
 	<div class="LoginWrapbg ">
 		<div style="width: 100%; height: 50%; left: 0; top: 0; z-index: -1;"></div>
 		<div style="width: 442px; height: 440px; margin: 0 auto; margin-top: -260px;">
-			<img src="resource/images/login/images/logo.png" style="margin-left: 50px;"/>
-			<div class="welcome">&nbsp; </div>
+			<!-- <img src="resource/images/login/images/logo.png" style="margin-left: 50px;"/> -->
+			<div class="welcome" style="font-size: 18px;font-weight: bolder;">北京航天三发高科技有限公司工作平台</div>
 			<div class="loginBar">
 				<div id="divcenter_login" >
 					<div class="fieldWrap" >
