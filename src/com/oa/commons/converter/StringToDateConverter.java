@@ -27,7 +27,13 @@ public class StringToDateConverter implements Converter<String,Date>{
 	
 	
 	public Date convert(String source) {
-		
-		return DateUtil.string2Date(source); 
+		Date date =  null;
+		try {
+			 date = DateUtil.string2Date(source);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return new Date();
+		}
+		return date; 
 	}
 }
