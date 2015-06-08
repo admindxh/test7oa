@@ -6900,7 +6900,7 @@ CREATE TABLE `sy_role` (
   `role_name` varchar(20) NOT NULL COMMENT '角色名称',
   `role_desc` varchar(255) DEFAULT '' COMMENT '角色描述',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `role_name` (`role_name`) USING BTREE
+  UNIQUE KEY `role_name` (`role_name`) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
 
 -- ----------------------------
@@ -8041,7 +8041,7 @@ CREATE TABLE `sy_users` (
   `register_uid` char(32) DEFAULT '' COMMENT '注册人',
   `mobile_phone_number` char(11) DEFAULT NULL COMMENT '手机号',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `user_name` (`user_name`) USING BTREE,
+  UNIQUE KEY `user_name` (`user_name`) ,
   KEY `user_status` (`user_status`),
   KEY `register_time` (`register_time`),
   KEY `sy_users_ibfk_1` (`dept_id`),
@@ -9444,8 +9444,8 @@ CREATE TABLE `xt_up_image` (
   `createuser` char(32) DEFAULT NULL COMMENT '创建人',
   `createtime` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
-  KEY `up_image_mtime` (`modifytime`) USING BTREE,
-  KEY `up_image_id` (`id`) USING BTREE
+  KEY `up_image_mtime` (`modifytime`) ,
+  KEY `up_image_id` (`id`) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='上传图片管理';
 
 -- ----------------------------
